@@ -1,3 +1,52 @@
 import datetime
 import numpy as np
 import pandas as pd
+
+np.random.seed(0) # set a seed for reproducibility
+pd.Series(np.random.rand(5), name='random')
+pd.Series(np.linspace(0, 10, num=5)).to_frame()
+
+pd.DataFrame([
+    {'mag' : 5.2, 'place' : 'California'},
+    {'mag' : 1.2, 'place' : 'Alaska'},
+    {'mag' : 0.2, 'place' : 'California'},
+])
+
+pd.DataFrame(
+    np.array([
+        [0, 0, 0],
+        [1, 1, 1],
+        [2, 4, 8],
+        [3, 9, 27],
+        [4, 16, 64]
+    ]), columns=['n', 'n_squared', 'n_cubed']
+)
+
+!wc -l laureates.csv  # this will not work on Windows commandline
+# On windows the !dir command will show directory contents
+
+import pandas as pd
+df = pd.read_csv('laureates.csv')
+
+import pandas as pd
+help(pd.DataFrame)
+
+df.info()
+df.head(10)
+df.tail(10)
+
+df.head(10)[['firstname','surname','city','country']]
+
+df[df['surname'] == 'Feynman'] 
+
+(df["surname"] == "Feynman")[86]
+
+df.loc[df["surname"] == "Feynman", "year"]
+
+laureates = df.groupby(["id", "firstname", "surname"])
+sizes = laureates.size()
+sizes[sizes > 1]       # result should show 5 winners
+
+df.loc[df['born'] == '1879-03-14']
+
+df.loc[df['born'].str.contains('06-08', na=False)]
